@@ -48,7 +48,7 @@ const stast = async (req,res)=>{
         //contar las images de todo los posts
         const images = await models.post.countDocuments();
         //contar los comentarios de todo los posts
-        const comments = await models.post.countDocuments();
+        const comments = await models.comments.countDocuments();
         //contar las vistas de todo los posts
         const countPost = (await models.post.find()).length;
         let views = 0;
