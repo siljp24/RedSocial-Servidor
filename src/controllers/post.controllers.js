@@ -1,6 +1,7 @@
 const models = require('../models');
 const values = require('../values');
 const fs = require('fs/promises');
+const config = require('../config');
 const path = require('path');
 
 const upload = async (req,res)=>{
@@ -12,7 +13,7 @@ const upload = async (req,res)=>{
         if(!user){
             return res.status(409).json({ error: 'Usuario no registrado'});
         }
-        const hostname = 'http://localhost:4500/';
+        const hostname = config.hostname;
         const filename = hostname + values.imageFolder + '/' + req.file.filename;
         const post = await models.post.create({
             image:filename,

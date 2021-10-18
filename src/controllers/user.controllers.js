@@ -9,7 +9,7 @@ const signUp = async (req,res) => {
     try{
         const { email, password } = req.body;
         const file = req.file;
-        const hostname = 'http://localhost:4500/';
+        const hostname = config.hostname;
         const hash = await models.user.encrypt(password);
         const user = {
             avatar:hostname + values.avatarFolder + '/' + file.filename,
