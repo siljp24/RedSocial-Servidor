@@ -7,9 +7,7 @@ const path = require('path');
 const upload = async (req,res)=>{
     try{
         const { title, description, ownerId } = req.body;
-        console.log({ title, description, ownerId })
         const user = await models.user.findById(ownerId);
-        console.log({ user })
         if(!user){
             return res.status(409).json({ error: 'Usuario no registrado'});
         }
@@ -82,7 +80,7 @@ const stast = async (req,res)=>{
 
 const mostPopular = async (req, res) =>{
     try{
-        const posts = await models.post.find().sort({ views: "desc"}).limit(2);
+        const posts = await models.post.find().sort({ views: "desc"}).limit(5);
         return res.status(201).json({ posts });
     }catch(err){
         return res.status(409).json(err);

@@ -2,7 +2,8 @@
  
  
  const config = {
-     hostname:'https://social-server-s.herokuapp.com/',
+    //  hostname:'https://social-server-s.herokuapp.com/',
+    hostname:'http://localhost:4500/',
      imageFolder:'./src/statics',
      database:{
          url:`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.fx9kc.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,

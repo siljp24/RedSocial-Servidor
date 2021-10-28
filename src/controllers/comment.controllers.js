@@ -4,7 +4,19 @@ const models = require('../models');
 const lastestComments = async (req,res) =>{
     try{
         const comments = await models.comment.find().sort({ createdAt: "desc"});
-        return res.status(201).json({ comments });
+        const data = [];
+        for(const comment of comments){
+            const post = await models.post.findById(comment.post);
+            const user = await models.user.findById(comment.user);
+            data.push({
+                _id: comment._id,
+                title: comment.title,
+                description: comment.description,
+                post,
+                user,
+            })
+        }
+        return res.status(201).json({ data });
     }catch(err){
         return res.status(409).json(err);
     }

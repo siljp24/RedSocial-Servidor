@@ -34,8 +34,11 @@ const signIn = async (req, res) => {
         if(!compare){
             return res.status(409).json({ error: 'Usuario no encontrado'});
         }
-        const token = jwt.sign({ user }, config.jwt.secret);
-        return res.status(201).json({ token })
+        const data = {
+            email: user.email,
+        }
+        const token = jwt.sign({ data }, config.jwt.secret);
+        return res.status(201).json({ token, avatar: user.avatar, email })
     }catch(err){
         return res.status(409).json({ err });
     }
