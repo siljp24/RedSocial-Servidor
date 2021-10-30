@@ -90,12 +90,27 @@ const mostPopular = async (req, res) =>{
 const details = async (req,res)=>{
     try{
         const { postId } = req.params;
+        const userId = req.body.userId;
         const post = await models.post.findById(postId);
         if(!post){
             return res.status(409).json({ error: 'El post no existe'});
         }
-        const comments = await models.comment.find({ postId });
-        return res.status(201).json({ post, comments });
+        const isOwner = post.owner.toString() === userId?.toString();
+        const comments = await models.comment.find({ postId }).populate('user');
+        const auxComments = [];
+        for(const comment of comments){
+            auxComments.push({
+                _id: comment._id,
+                title: comment.title,
+                description: comment.description,
+                user:{
+                    _id: comment.user._id,
+                    avatar: comment.user.avatar,
+                    email: comment.user.email,
+                }
+            })
+        }
+        return res.status(201).json({ post, comments: auxComments, isOwner });
     }catch(err){
         return res.status(409).json(err);
     }

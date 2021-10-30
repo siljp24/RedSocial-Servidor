@@ -9,9 +9,9 @@ const router = Router();
 
 router.post('/upload',middlewares.auth.isToken,uploads.single(values.imageFolder),middlewares.auth.userExists, controllers.post.upload);
 router.get('/recentUploads', controllers.post.recentUploads);
-router.get('/stast', controllers.post.stast);
+router.get('/stats', controllers.post.stast);
 router.get('/mostPopular', controllers.post.mostPopular);
-router.get('/details/:postId', controllers.post.details);
+router.get('/details/:postId',middlewares.auth.isToken,middlewares.auth.detailValidation, controllers.post.details);
 router.delete('/delete', controllers.post.remove);
 router.post('/like', controllers.post.like);
 router.post('/view', controllers.post.view);
